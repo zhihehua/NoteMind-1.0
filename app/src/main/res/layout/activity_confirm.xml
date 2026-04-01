@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="编辑信息"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_label_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="标题: (题目/主题/场景等)"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="4dp"
+            android:labelFor="@+id/et_question"/>
+
+        <EditText
+            android:id="@+id/et_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:importantForAccessibility="yes"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/tv_label_answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="智记解答内容:"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="4dp"
+            android:labelFor="@+id/et_answer"/>
+
+        <EditText
+            android:id="@+id/et_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:minHeight="48dp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:importantForAccessibility="yes"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="6dp">
+            <TextView
+                android:id="@+id/tv_label_tag"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="标签: (例：高数、菜谱、旅游)"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginLeft="4dp"
+                android:labelFor="@+id/et_tag"/>
+            <TextView
+                android:id="@+id/btn_add_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" + "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#666666"
+                android:padding="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:importantForAccessibility="yes"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="6dp">
+            <TextView
+                android:id="@+id/tv_label_category"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="细分范围: (例:积分、个人菜谱)"
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:layout_marginLeft="4dp"
+                android:labelFor="@+id/et_category"/>
+            <TextView
+                android:id="@+id/btn_add_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" + "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#666666"
+                android:padding="4dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:importantForAccessibility="yes"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/tv_label_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户笔记: "
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="4dp"
+            android:labelFor="@+id/et_user_note"/>
+
+        <EditText
+            android:id="@+id/et_user_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="3"
+            android:minHeight="48dp"
+            android:background="@drawable/edittext_bg"
+            android:padding="12dp"
+            android:layout_marginBottom="24dp"
+            android:importantForAccessibility="yes"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="取消"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/btn_confirm"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="确认保存"
+                android:background="@drawable/btn_confirm"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

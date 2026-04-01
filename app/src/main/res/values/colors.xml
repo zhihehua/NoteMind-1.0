@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- ===================== 灰色系 ===================== -->
+    <color name="gray_200">#EEEEEE</color>        <!-- 淡灰（分割线、描边） -->
+    <color name="gray_300">#E0E0E0</color>        <!-- 浅灰（禁用背景） -->
+    <color name="gray_400">#BDBDBD</color>        <!-- 中灰（次要文字） -->
+    <color name="gray_500">#9E9E9E</color>        <!-- 标准灰（提示文字） -->
+    <color name="gray_600">#757575</color>        <!-- 深灰（正文文字） -->
+
+    <!-- ===================== 黑色系 ===================== -->
+    <color name="black_400">#424242</color>        <!-- 浅黑（标题文字） -->
+    <color name="black_500">#212121</color>        <!-- 标准黑（主文本，标题） -->
+    <color name="black_600">#000000</color>        <!-- 纯黑（强调文字） -->
+    <!-- 蓝色系颜色资源 -->
+    <color name="blue_50">#E3F2FD</color>        <!-- 极浅蓝（背景） -->
+    <color name="blue_100">#BBDEFB</color>       <!-- 浅蓝（卡片背景） -->
+    <color name="blue_200">#90CAF9</color>       <!-- 淡蓝（次要元素） -->
+    <color name="blue_300">#64B5F6</color>       <!-- 中浅蓝（选中状态） -->
+    <color name="blue_400">#42A5F5</color>       <!-- 适中蓝（按钮默认） -->
+    <color name="blue_500">#2196F3</color>       <!-- 标准蓝（主色调，Material 推荐） -->
+    <color name="blue_600">#1E88E5</color>       <!-- 深一点的蓝（按下状态） -->
+    <color name="blue_700">#1976D2</color>       <!-- 深蓝（强调） -->
+    <color name="blue_800">#1565C0</color>       <!-- 暗蓝（标题） -->
+    <color name="blue_900">#0D47A1</color>       <!-- 极深蓝（重要文本） -->
+    <color name="blue_accent">#82B1FF</color>    <!-- 亮蓝（高亮、提示） -->
+    <color name="blue_dark">#0D47A1</color>      <!-- 浓蓝（深沉强调） -->
+    <color name="blue_light">#E3F2FD</color>     <!-- 超浅蓝（分隔线、次要背景） -->
+    <color name="cyan_500">#00BCD4</color>       <!-- 青色（偏蓝绿色，用于特殊强调） -->
+    <color name="indigo_500">#3F51B5</color>     <!-- 靛蓝色（偏紫的蓝，用于差异化设计） -->
+    <!-- 绿色系颜色资源 -->
+    <color name="green_50">#E8F5E9</color>       <!-- 极浅绿（背景） -->
+    <color name="green_100">#C8E6C9</color>      <!-- 浅绿（卡片背景） -->
+    <color name="green_200">#A5D6A7</color>      <!-- 淡绿（次要元素） -->
+    <color name="green_300">#81C784</color>      <!-- 中浅绿（选中状态） -->
+    <color name="green_400">#66BB6A</color>      <!-- 适中绿（按钮默认） -->
+    <color name="green_500">#4CAF50</color>      <!-- 标准绿（主色调） -->
+    <color name="green_600">#43A047</color>      <!-- 深一点的绿（按下状态） -->
+    <color name="green_700">#388E3C</color>      <!-- 深绿（强调） -->
+    <color name="green_800">#2E7D32</color>      <!-- 暗绿（标题） -->
+    <color name="green_900">#1B5E20</color>      <!-- 极深绿（重要文本） -->
+    <color name="green_accent">#B2FF59</color>   <!-- 亮绿（高亮、提示） -->
+    <color name="green_dark">#00C853</color>     <!-- 浓绿（成功状态） -->
+    <color name="green_light">#F1F8E9</color>    <!-- 超浅绿（分隔线） -->
+    <!-- 紫色系颜色资源 -->
+    <color name="purple_50">#F3E5F5</color>      <!-- 极浅紫（背景） -->
+    <color name="purple_100">#E1BEE7</color>     <!-- 浅紫（卡片背景） -->
+    <!-- 淡紫（次要元素） -->
+    <color name="purple_300">#BA68C8</color>     <!-- 中浅紫（选中状态） -->
+    <color name="purple_400">#AB47BC</color>     <!-- 适中紫（按钮默认） -->
+    <!-- 标准紫（主色调） -->
+    <color name="purple_600">#8E24AA</color>     <!-- 深一点的紫（按下状态） -->
+    <!-- 深紫（强调） -->
+    <color name="purple_800">#6A1B9A</color>     <!-- 暗紫（标题） -->
+    <color name="purple_900">#4A148C</color>     <!-- 极深紫（重要文本） -->
+    <color name="violet_500">#AA00FF</color>     <!-- 紫罗兰色（高亮） -->
+    <color name="magenta_500">#FF00FF</color>    <!-- 品红（特殊强调） -->
+    <!-- ===================== 白色系 ===================== -->
+    <color name="white_100">#FAFAFA</color>        <!-- 超浅白（背景底色） -->
+    <color name="white_200">#F5F5F5</color>        <!-- 淡白（卡片背景） -->
+    <color name="white_300">#EEEEEE</color>        <!-- 浅灰白（分割线/描边） -->
+    <color name="white_400">#E0E0E0</color>        <!-- 中浅白（禁用状态） -->
+    <color name="white_500">#FFFFFF</color>        <!-- 标准白（纯文本背景） -->
+    <!-- 红色系颜色资源 -->
+    <color name="red_50">#FFEBEE</color>         <!-- 极浅红（背景） -->
+    <color name="red_100">#FFCDD2</color>        <!-- 浅红（卡片背景） -->
+    <color name="red_200">#EF9A9A</color>        <!-- 淡红（次要元素） -->
+    <color name="red_300">#E57373</color>        <!-- 中浅红（选中状态） -->
+    <color name="red_400">#EF5350</color>        <!-- 适中红（按钮默认） -->
+    <color name="red_500">#F44336</color>        <!-- 标准红（主色调，警示色） -->
+    <color name="red_600">#E53935</color>        <!-- 深一点的红（按下状态） -->
+    <color name="red_700">#D32F2F</color>        <!-- 深红（强调、错误提示） -->
+    <color name="red_800">#C62828</color>        <!-- 暗红（标题） -->
+    <color name="red_900">#B71C1C</color>        <!-- 极深红（重要警示文本） -->
+    <color name="pink_500">#E91E63</color>       <!-- 粉红色（活力强调） -->
+    <color name="coral_500">#FF5722</color>      <!-- 珊瑚红（偏橙红，用于吸引注意） -->
+</resources>

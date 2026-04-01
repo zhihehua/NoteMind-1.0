@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F2F5"
+    android:padding="16dp">
+
+    <!-- 1. 顶部标签区 -->
+    <TextView
+        android:id="@+id/tv_tag_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:text="当前聚焦场景"
+        android:textColor="#888888"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <HorizontalScrollView
+        android:id="@+id/tag_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_header_card"
+        android:elevation="2dp"
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        app:layout_constraintTop_toBottomOf="@id/tv_tag_label">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="12dp"
+            app:singleLine="true" />
+    </HorizontalScrollView>
+
+    <!-- 2. 中部录入与个人中心卡片 -->
+    <LinearLayout
+        android:id="@+id/main_op_card"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_main_card"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tag_scroll">
+
+        <!-- 左侧录入区 -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:orientation="vertical">
+
+            <!-- 文本录入 -->
+            <LinearLayout
+                android:id="@+id/btn_input_text_container"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="#253545"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_list"
+                    app:tint="#FFFFFF" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="文本录入"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 底部两按钮 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/btn_take_photo_container"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:background="#253545"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/camera"
+                        app:tint="#FFFFFF" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="相机录入"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_gallery_container"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="4dp"
+                    android:background="#253545"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/gallery"
+                        app:tint="#FFFFFF" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="相册录入"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 右侧个人中心 -->
+        <LinearLayout
+            android:id="@+id/btn_show_list_main"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:layout_margin="4dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_my"
+                app:tint="#1A2634" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="个人中心"
+                android:textColor="#1A2634"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 3. 下方引导占位 -->
+    <TextView
+        android:id="@+id/tv_guide_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="8dp"
+        android:text="入门与指引"
+        android:textColor="#222222"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_op_card" />
+
+    <androidx.gridlayout.widget.GridLayout
+        android:id="@+id/guide_grid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        app:columnCount="2"
+        app:rowCount="2"
+        app:layout_constraintBottom_toTopOf="@id/btn_knowledge_atom_main"
+        app:layout_constraintTop_toBottomOf="@id/tv_guide_label">
+
+        <!-- 占位容器 1 -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_placeholder">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="[图片]" android:layout_gravity="center" android:textColor="#CCCCCC"/>
+        </FrameLayout>
+
+        <!-- 占位容器 2 -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_placeholder">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="[图片]" android:layout_gravity="center" android:textColor="#CCCCCC"/>
+        </FrameLayout>
+
+        <!-- 占位容器 3 -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_placeholder">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="[图片]" android:layout_gravity="center" android:textColor="#CCCCCC"/>
+        </FrameLayout>
+
+        <!-- 占位容器 4 -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            app:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:background="@drawable/bg_placeholder">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="[图片]" android:layout_gravity="center" android:textColor="#CCCCCC"/>
+        </FrameLayout>
+    </androidx.gridlayout.widget.GridLayout>
+
+    <!-- 4. 底部原子智图按钮 -->
+    <LinearLayout
+        android:id="@+id/btn_knowledge_atom_main"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_bottom_nav"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_atom"
+            app:tint="#FFFFFF" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

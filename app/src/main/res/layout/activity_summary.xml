@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <TextView
+        android:id="@+id/tv_summary_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个性化总结"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_summary_card"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_ai_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="正在调用用户数据，生成报告中,请稍候..."
+            android:textColor="#E0E0E0"
+            android:textSize="16sp"
+            android:lineSpacingExtra="6dp" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_re_summary"
+        android:layout_width="334dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_dark_gradient"
+        android:text="重新生成"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

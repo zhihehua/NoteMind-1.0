@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        // 阿里云镜像（优先）
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        // 官方仓库（兜底，防止镜像缺失依赖）
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        // 阿里云镜像（优先）
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        // 官方仓库（兜底）
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "NoteMind"
+include ':app'
