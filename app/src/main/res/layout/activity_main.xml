@@ -5,244 +5,15 @@
     android:layout_height="match_parent"
     android:background="#F0F2F5">
 
-    <!-- 1. 内容容器区 -->
-    <FrameLayout
-        android:id="@+id/main_content_container"
+    <!-- 1. ViewPager2 容器 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/main_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_bar"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- [首页标签页] -->
-        <LinearLayout
-            android:id="@+id/layout_tab_home"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:visibility="visible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="当前聚焦场景"
-                android:textColor="#888888"
-                android:textSize="14sp" />
-
-            <HorizontalScrollView
-                android:id="@+id/tag_scroll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_header_card"
-                android:elevation="2dp"
-                android:overScrollMode="never"
-                android:padding="10dp">
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group_tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipSpacingHorizontal="12dp"
-                    app:singleLine="true" />
-            </HorizontalScrollView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
-                android:text="功能录入"
-                android:textColor="#888888"
-                android:textSize="14sp" />
-
-            <!-- 功能卡片矩阵 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_main_card"
-                android:orientation="vertical"
-                android:padding="8dp">
-                <LinearLayout
-                    android:id="@+id/btn_input_text_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1.2"
-                    android:background="#253545"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <ImageView
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
-                        android:src="@drawable/ic_list"
-                        app:tint="#FFFFFF" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="智能文本录入"
-                        android:textColor="#FFFFFF"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:id="@+id/btn_take_photo_container"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="#253545"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/camera"
-                            app:tint="#FFFFFF" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="相机识别"
-                            android:textColor="#FFFFFF"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/btn_gallery_container"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="#253545"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="28dp"
-                            android:layout_height="28dp"
-                            android:src="@drawable/gallery"
-                            app:tint="#FFFFFF" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:text="相册导入"
-                            android:textColor="#FFFFFF"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- [原子智图标签页] -->
-        <LinearLayout
-            android:id="@+id/layout_tab_atom"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:visibility="gone">
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:alpha="0.8"
-                android:src="@drawable/ic_atom"
-                app:tint="#34495E" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="原子知识空间"
-                android:textColor="#333333"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/btn_knowledge_atom_tab"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/bg_bottom_nav"
-                android:text="探索智谱图谱"
-                android:textColor="#FFFFFF" />
-        </LinearLayout>
-
-        <!-- [个人中心标签页] -->
-        <LinearLayout
-            android:id="@+id/layout_tab_my"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="20dp"
-            android:visibility="gone">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_header_card"
-                android:elevation="4dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="24dp">
-                <ImageView
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/ic_my"
-                    app:tint="#1A2634" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="智记用户"
-                    android:textColor="#333333"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/btn_show_list_tab"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/bg_placeholder"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:padding="18dp">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_list"
-                    app:tint="#333333" />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:text="我的笔记列表"
-                    android:textColor="#333333"
-                    android:textSize="16sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=">"
-                    android:textColor="#CCCCCC" />
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
-
-    <!-- 2. 底部导航栏 (高度固定 65dp) -->
+    <!-- 2. 底部导航栏 -->
     <LinearLayout
         android:id="@+id/bottom_nav_bar"
         android:layout_width="match_parent"
@@ -264,7 +35,7 @@
             android:src="@drawable/ic_list"
             app:tint="#FFFFFF"
             android:scaleType="centerInside"
-            android:padding="7dp" /> <!-- 修改此处 dp 值即可改变大小：数值越小图标越大 -->
+            android:padding="7dp" />
 
         <ImageButton
             android:id="@+id/nav_btn_atom"
@@ -275,7 +46,7 @@
             android:src="@drawable/ic_atom"
             app:tint="#FFFFFF"
             android:scaleType="centerInside"
-            android:padding="6dp" /> <!-- 修改此处 dp 值：中间保持较小 padding 以显得更大 -->
+            android:padding="6dp" />
 
         <ImageButton
             android:id="@+id/nav_btn_my"
@@ -286,6 +57,6 @@
             android:src="@drawable/ic_my"
             app:tint="#FFFFFF"
             android:scaleType="centerInside"
-            android:padding="6dp" /> <!-- 修改此处 dp 值 -->
+            android:padding="6dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
