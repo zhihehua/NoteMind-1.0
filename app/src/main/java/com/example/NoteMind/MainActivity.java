@@ -11,13 +11,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,29 +27,22 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    // 标签页容器
+    private View layoutHome, layoutAtom, layoutMy;
+    // 导航按钮
+    private ImageButton navHome, navAtom, navMy;
+
     private ChipGroup chipGroupTags;
     private String currentSelectedTag = "";
     private HorizontalScrollView tagScroll;
 
     private CameraUtils cameraUtils;
     private QuestionDao questionDao;
-
-    private static final String API_KEY = "你的API_KEY";
-    private static final String API_URL = "https://hello-occejwojlb.cn-hangzhou.fcapp.run";
-    private static final String MODEL = "doubao-seed-1-8-251228";
+    private NoteMindAgent agent;
 
     private AlertDialog loadingDialog;
     private static final int ALL_PERMISSION_CODE = 100;
@@ -61,38 +54,142 @@ public class MainActivity extends AppCompatActivity {
 
         questionDao = new QuestionDao(this);
         cameraUtils = new CameraUtils(this);
+        agent = new NoteMindAgent();
 
-        // --- 1. 绑定新版布局 ID ---
-        View btnInputTextContainer = findViewById(R.id.btn_input_text_container);
-        View btnTakePhotoContainer = findViewById(R.id.btn_take_photo_container);
-        View btnGalleryContainer = findViewById(R.id.btn_gallery_container);
-        View btnShowListMain = findViewById(R.id.btn_show_list_main);
-        View btnKnowledgeAtomMain = findViewById(R.id.btn_knowledge_atom_main);
+        // --- 1. 绑定 ID 与切换逻辑 ---
+        layoutHome = findViewById(R.id.layout_tab_home);
+        layoutAtom = findViewById(R.id.layout_tab_atom);
+        layoutMy = findViewById(R.id.layout_tab_my);
 
+        navHome = findViewById(R.id.nav_btn_home);
+        navAtom = findViewById(R.id.nav_btn_atom);
+        navMy = findViewById(R.id.nav_btn_my);
+
+        navHome.setOnClickListener(v -> switchTab(0));
+        navAtom.setOnClickListener(v -> switchTab(1));
+        navMy.setOnClickListener(v -> switchTab(2));
+
+        // --- 2. 首页录入功能绑定 ---
+        findViewById(R.id.btn_input_text_container).setOnClickListener(v -> v.postDelayed(this::showInputTextDialog, 50));
+        findViewById(R.id.btn_take_photo_container).setOnClickListener(v -> v.postDelayed(cameraUtils::openCamera, 50));
+        findViewById(R.id.btn_gallery_container).setOnClickListener(v -> v.postDelayed(cameraUtils::openGallery, 50));
+
+        // --- 3. 原子图谱功能绑定 ---
+        findViewById(R.id.btn_knowledge_atom_tab).setOnClickListener(v -> v.postDelayed(this::showAtomTagDialog, 50));
+
+        // --- 4. 个人中心跳转绑定 ---
+        findViewById(R.id.btn_show_list_tab).setOnClickListener(v -> v.postDelayed(() -> {
+            startActivity(new Intent(this, NoteListActivity.class));
+        }, 50));
+
+        // 原有初始化
         chipGroupTags = findViewById(R.id.chip_group_tags);
         tagScroll = findViewById(R.id.tag_scroll);
 
         checkPermissions();
         refreshTagChips();
-
-        // --- 2. 核心交互逻辑：带 50ms 延迟的跳转反馈 ---
-        btnInputTextContainer.setOnClickListener(v -> v.postDelayed(this::showInputTextDialog, 50));
-        btnTakePhotoContainer.setOnClickListener(v -> v.postDelayed(cameraUtils::openCamera, 50));
-        btnGalleryContainer.setOnClickListener(v -> v.postDelayed(cameraUtils::openGallery, 50));
-        btnShowListMain.setOnClickListener(v -> v.postDelayed(() -> startActivity(new Intent(this, NoteListActivity.class)), 50));
-        btnKnowledgeAtomMain.setOnClickListener(v -> v.postDelayed(this::showAtomTagDialog, 50));
+        switchTab(0); // 默认首页
 
         // 拍照与相册回调
         cameraUtils.setOnCameraResultListener(new CameraUtils.OnCameraResultListener() {
             @Override
-            public void onCameraSuccess(Bitmap bitmap) { requestAiOcr(bitmap); }
+            public void onCameraSuccess(Bitmap bitmap) {
+                agent.requestAiOcr(bitmap, currentSelectedTag, createAgentCallback());
+            }
             @Override
-            public void onGallerySuccess(Bitmap bitmap) { requestAiOcr(bitmap); }
+            public void onGallerySuccess(Bitmap bitmap) {
+                agent.requestAiOcr(bitmap, currentSelectedTag, createAgentCallback());
+            }
             @Override
             public void onFail(String msg) {
                 Toast.makeText(MainActivity.this, "操作失败: " + msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private NoteMindAgent.AgentCallback createAgentCallback() {
+        return new NoteMindAgent.AgentCallback() {
+            private NoteMindAgent.NoteMindIntent currentIntent = NoteMindAgent.NoteMindIntent.UNKNOWN;
+
+            @Override
+            public void onStart() {
+                showLoading();
+            }
+
+            @Override
+            public void onIntentDetected(NoteMindAgent.NoteMindIntent intent) {
+                currentIntent = intent;
+            }
+
+            @Override
+            public void onProgress(String chunk) {
+                // 流式进度处理
+            }
+
+            @Override
+            public void onSuccess(String finalResult) {
+                if (loadingDialog != null) loadingDialog.dismiss();
+                
+                if (currentIntent == NoteMindAgent.NoteMindIntent.MIND_MAP) {
+                    Intent intent = new Intent(MainActivity.this, AtomGraphActivity.class);
+                    intent.putExtra("TARGET_TAG", currentSelectedTag);
+                    intent.putExtra("RAW_JSON", finalResult);
+                    startActivity(intent);
+                } else {
+                    // 解析字段：题目、解答、标签、分类
+                    String q = "智能识别", a = finalResult, t = currentSelectedTag, c = "";
+                    
+                    try {
+                        String[] lines = finalResult.split("\n");
+                        StringBuilder answerBuilder = new StringBuilder();
+                        boolean inAnswer = false;
+
+                        for (String line : lines) {
+                            if (line.startsWith("题目：")) {
+                                q = line.replace("题目：", "").trim();
+                                inAnswer = false;
+                            } else if (line.startsWith("解答：")) {
+                                answerBuilder.append(line.replace("解答：", "").trim()).append("\n");
+                                inAnswer = true;
+                            } else if (line.startsWith("标签：")) {
+                                t = line.replace("标签：", "").trim();
+                                inAnswer = false;
+                            } else if (line.startsWith("分类：")) {
+                                c = line.replace("分类：", "").trim();
+                                inAnswer = false;
+                            } else if (inAnswer) {
+                                answerBuilder.append(line).append("\n");
+                            }
+                        }
+                        if (answerBuilder.length() > 0) a = answerBuilder.toString().trim();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent intent = new Intent(MainActivity.this, ConfirmActivity.class);
+                    intent.putExtra("question", q);
+                    intent.putExtra("answer", a);
+                    intent.putExtra("tag", t);
+                    intent.putExtra("category", c);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                handleError(error);
+            }
+        };
+    }
+
+    private void switchTab(int index) {
+        layoutHome.setVisibility(index == 0 ? View.VISIBLE : View.GONE);
+        layoutAtom.setVisibility(index == 1 ? View.VISIBLE : View.GONE);
+        layoutMy.setVisibility(index == 2 ? View.VISIBLE : View.GONE);
+
+        navHome.setAlpha(index == 0 ? 1.0f : 0.5f);
+        navAtom.setAlpha(index == 1 ? 1.0f : 0.5f);
+        navMy.setAlpha(index == 2 ? 1.0f : 0.5f);
     }
 
     private void refreshTagChips() {
@@ -165,10 +262,10 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(20, 20, 20, 20);
-        
+
         ListView listView = new ListView(this);
         listView.setAdapter(new android.widget.ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tagArray));
-        
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int)(400 * getResources().getDisplayMetrics().density));
         listView.setLayoutParams(params);
         layout.addView(listView);
@@ -219,92 +316,9 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
                 String wrappedPrompt = currentSelectedTag.isEmpty() ? text :
                         "【场景标签：" + currentSelectedTag + "】用户问题：" + text;
-                requestAiText(wrappedPrompt);
+                agent.requestAiText(wrappedPrompt, createAgentCallback());
             }
         });
-    }
-
-    private void requestAiOcr(Bitmap bitmap) {
-        showLoading();
-        new Thread(() -> {
-            try {
-                String base64 = bitmapToSmallBase64(bitmap);
-                JSONObject json = new JSONObject();
-                json.put("model", MODEL);
-                JSONArray messages = new JSONArray();
-                messages.put(new JSONObject().put("role", "system")
-                        .put("content", "你是一个知识助手。请按格式输出,并且不能有转化符号,纯文本输出：题目：xxx解答：xxx。"));
-                JSONObject msg = new JSONObject();
-                msg.put("role", "user");
-                JSONArray contentArr = new JSONArray();
-                JSONObject textObj = new JSONObject();
-                textObj.put("text", currentSelectedTag.isEmpty() ? "识别图片中的题目并解答。" :
-                        "【场景：" + currentSelectedTag + "】请分析图片中的知识点并解答。");
-                textObj.put("type", "text");
-                contentArr.put(textObj);
-                JSONObject imgObj = new JSONObject();
-                imgObj.put("type", "image_url");
-                imgObj.put("image_url", new JSONObject().put("url", "data:image/jpeg;base64," + base64));
-                contentArr.put(imgObj);
-                msg.put("content", contentArr);
-                messages.put(msg);
-                json.put("messages", messages);
-                callApi(json.toString());
-            } catch (Exception e) { handleError(e.getMessage()); }
-        }).start();
-    }
-
-    private void requestAiText(String text) {
-        showLoading();
-        new Thread(() -> {
-            try {
-                JSONObject json = new JSONObject();
-                json.put("model", MODEL);
-                JSONArray messages = new JSONArray();
-                messages.put(new JSONObject().put("role", "system")
-                        .put("content", "你是一个知识助手。请按格式输出：题目：xxx解答：xxx。"));
-                messages.put(new JSONObject().put("role", "user").put("content", text));
-                json.put("messages", messages);
-                callApi(json.toString());
-            } catch (Exception e) { handleError(e.getMessage()); }
-        }).start();
-    }
-
-    private void callApi(String body) {
-        try {
-            URL url = new URL(API_URL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            conn.setRequestProperty("Authorization", "Bearer " + API_KEY);
-            conn.setDoOutput(true);
-            try (OutputStream os = conn.getOutputStream()) { os.write(body.getBytes()); }
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) sb.append(line);
-            JSONObject res = new JSONObject(sb.toString());
-            String fullText = res.getJSONArray("choices").getJSONObject(0)
-                    .getJSONObject("message").getString("content");
-            String cleanText = fullText.replaceAll("```[a-zA-Z]*", "").replace("```", "").trim();
-            String finalQ = "智能识别", finalA = cleanText;
-            if (cleanText.contains("题目：") && cleanText.contains("解答：")) {
-                int qIdx = cleanText.indexOf("题目：") + 3, aIdx = cleanText.indexOf("解答：");
-                if (qIdx < aIdx) {
-                    finalQ = cleanText.substring(qIdx, aIdx).trim();
-                    finalA = cleanText.substring(aIdx + 3).trim();
-                }
-            }
-            final String fQ = finalQ, fA = finalA;
-            runOnUiThread(() -> {
-                if (loadingDialog != null) loadingDialog.dismiss();
-                Intent intent = new Intent(this, ConfirmActivity.class);
-                intent.putExtra("question", fQ);
-                intent.putExtra("answer", fA);
-                intent.putExtra("selected_tag", currentSelectedTag);
-                startActivity(intent);
-            });
-        } catch (Exception e) { handleError(e.getMessage()); }
     }
 
     private void handleError(String msg) {
@@ -345,13 +359,6 @@ public class MainActivity extends AppCompatActivity {
                 loadingDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             }
         });
-    }
-
-    private String bitmapToSmallBase64(Bitmap bitmap) {
-        Bitmap small = Bitmap.createScaledBitmap(bitmap, 640, 480, true);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        small.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-        return Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP);
     }
 
     @Override protected void onResume() { super.onResume(); refreshTagChips(); }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_tab_atom"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:alpha="0.8"
+        android:src="@drawable/ic_atom"
+        app:tint="#34495E" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="原子知识空间"
+        android:textColor="#333333"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="可视化您的思维结构"
+        android:textColor="#888888"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn_knowledge_atom_tab"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_bottom_nav"
+        android:text="进入智谱原子"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+</LinearLayout>

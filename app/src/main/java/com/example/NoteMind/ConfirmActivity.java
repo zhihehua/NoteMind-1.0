@@ -32,10 +32,17 @@ public class ConfirmActivity extends AppCompatActivity {
         
         dao = new QuestionDao(this);
 
+        // 接收从 MainActivity 传来的自动填充数据
         String question = getIntent().getStringExtra("question");
         String answer = getIntent().getStringExtra("answer");
-        etQuestion.setText(question);
-        etAnswer.setText(answer);
+        String tag = getIntent().getStringExtra("tag");
+        String category = getIntent().getStringExtra("category");
+
+        // 填充 UI
+        etQuestion.setText(question != null ? question : "");
+        etAnswer.setText(answer != null ? answer : "");
+        etTag.setText(tag != null ? tag : "");
+        etCategory.setText(category != null ? category : "");
 
         btnAddTag.setOnClickListener(v -> showExistingTags());
         btnAddCategory.setOnClickListener(v -> showExistingCategories());
@@ -44,7 +51,7 @@ public class ConfirmActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> {
             String q = etQuestion.getText().toString().trim();
             String a = etAnswer.getText().toString().trim();
-            String tag = etTag.getText().toString().trim();
+            String t = etTag.getText().toString().trim();
             String note = etUserNote.getText().toString().trim();
             String cate = etCategory.getText().toString().trim();
 
@@ -52,7 +59,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 Toast.makeText(this, "标题不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (tag.isEmpty()) {
+            if (t.isEmpty()) {
                 Toast.makeText(this, "标签不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -61,7 +68,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 return;
             }
 
-            QuestionNote noteObj = new QuestionNote(q, a, tag, note, cate);
+            QuestionNote noteObj = new QuestionNote(q, a, t, note, cate);
             long id = dao.addNote(noteObj);
             if (id > 0) {
                 Toast.makeText(this, "保存成功！", Toast.LENGTH_SHORT).show();
